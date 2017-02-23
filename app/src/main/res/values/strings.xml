@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">VkPhotoViewer</string>
+    <integer name="com_vk_sdk_AppId">5884192</integer>
+    <string name="start_viewing">Начать просмотр фотографий</string>
+</resources>
