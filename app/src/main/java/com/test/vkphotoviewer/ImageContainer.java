@@ -1,10 +1,5 @@
 package com.test.vkphotoviewer;
 
-
-import android.widget.GridView;
-import android.widget.ImageView;
-
-import java.sql.Struct;
 import java.util.ArrayList;
 
 public class ImageContainer{

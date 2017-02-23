@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 public class PhotoGetter {
     private Context context;
@@ -63,7 +62,6 @@ public class PhotoGetter {
                 this.container.add(worstPhoto.get("src").toString(),
                         bestPhoto.get("src").toString(),
                         currentObj.get("text").toString());
-                //System.out.println(worstPhoto.get("src").toString());
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -72,14 +70,12 @@ public class PhotoGetter {
     }
 
     private void sendIntent(){
-        System.out.println("construct");
         Intent intent = new Intent(context, View_Grid.class);
 
         intent.putExtra("ARRAY_OF_SMALL_SIZES",this.container.getArrayOfSmallSize());
         intent.putExtra("ARRAY_OF_BIG_SIZES",this.container.getArrayOfBigSize());
         intent.putExtra("ARRAY_OF_TITLES",this.container.getArrayOfTitle());
 
-        System.out.println("putExtra");
         context.startActivity(intent);
     }
 

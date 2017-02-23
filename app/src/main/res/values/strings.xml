@@ -2,4 +2,7 @@
     <string name="app_name">VkPhotoViewer</string>
     <integer name="com_vk_sdk_AppId">5884192</integer>
     <string name="start_viewing">Начать просмотр фотографий</string>
+    <string name="login">Выбрать аккаунт ВКонтакте</string>
+    <string name="success_login">Авторизация прошла успешно</string>
+    <string name="error_login">Пользователь не авторизован</string>
 </resources>

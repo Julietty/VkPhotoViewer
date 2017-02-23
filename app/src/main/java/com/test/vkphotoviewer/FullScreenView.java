@@ -1,35 +1,29 @@
 package com.test.vkphotoviewer;
 
-import android.media.Image;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import java.util.ArrayList;
 
 public class FullScreenView extends AppCompatActivity {
+    ViewPager viewPager;
+    CustomSwipeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_screen_view);
 
-        String photoURL = new String((String)getIntent().getExtras().get("PHOTO"));
-        String title = new String((String)getIntent().getExtras().get("TITLE"));
-        View view = new View(this);
+        ArrayList<String> photos = new ArrayList<String>((ArrayList<String>)getIntent().getExtras().get("PHOTOS"));
+        ArrayList<String> titles = new ArrayList<String>((ArrayList<String>)getIntent().getExtras().get("TITLES"));
+        final int position = (int)getIntent().getExtras().get("POSITION");
 
-        ImageView image = (ImageView)findViewById(R.id.grid_item_image);
-        TextView text = (TextView) findViewById(R.id.grid_item_title);
-        if (!title.isEmpty()) {
-            text.setText(title);
-        }else{
-            text.setVisibility(View.INVISIBLE);
-        }
-        Picasso.with(this).load(photoURL).into(image);
-        System.out.println("hui");
-        System.out.print("miu"+title.length());
+        viewPager = (ViewPager)findViewById(R.id.view_pager);
+        adapter = new CustomSwipeAdapter(this, photos,titles);
+        viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(position);
+
     }
 
 }

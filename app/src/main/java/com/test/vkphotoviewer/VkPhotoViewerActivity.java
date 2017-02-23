@@ -2,8 +2,8 @@ package com.test.vkphotoviewer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.ListView;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
 import com.vk.sdk.VKAccessToken;
@@ -19,8 +19,9 @@ public class VkPhotoViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vk_photo_viewer);
+        ImageView image = (ImageView)findViewById(R.id.background);
+        image.setImageResource(R.drawable.background);
 
-        VKSdk.login(this, scope);
     }
 
     @Override
@@ -28,25 +29,32 @@ public class VkPhotoViewerActivity extends AppCompatActivity {
         if (!VKSdk.onActivityResult(requestCode, resultCode, data, new VKCallback<VKAccessToken>() {
             @Override
             public void onResult(VKAccessToken res) {
-                Toast.makeText(getApplicationContext(),"Авторизация успешно завершена",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.success_login,Toast.LENGTH_LONG).show();
             }
             @Override
             public void onError(VKError error) {
-                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),R.string.error_login,Toast.LENGTH_LONG).show();
             }
         })) {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
-    public void onClickStartViewing(View view){
-        Intent intent = new Intent(this,View_Grid.class);
-        startActivity(intent);
-    }
 
     public void onClickGetPhoto(View view){
-        PhotoGetter allPhoto = new PhotoGetter(VkPhotoViewerActivity.this);
-        allPhoto.getAllPhoto();
+        if (!VKSdk.isLoggedIn()){
+            Toast.makeText(getApplicationContext(),R.string.error_login,Toast.LENGTH_LONG).show();
+        }else {
+            PhotoGetter allPhoto = new PhotoGetter(VkPhotoViewerActivity.this);
+            allPhoto.getAllPhoto();
+        }
     }
 
+    public void onClickLogin(View view){
+        VKSdk.initialize(this);
+        if (VKSdk.isLoggedIn()) {
+            VKSdk.logout();
+        }
+        VKSdk.login(this, scope);
+    }
 }
